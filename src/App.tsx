@@ -8,6 +8,8 @@ import { Button, FlexBoxCol, FlexBoxRow } from "./components/styled/styled";
 import { useTonConnect } from "./hooks/useTonConnect";
 import { CHAIN } from "@tonconnect/protocol";
 import "@twa-dev/sdk";
+import { FundProject } from "./components/Project";
+import { BottomNav } from "./components/BottomNav";
 
 const StyledApp = styled.div`
   background-color: #e8e8e8;
@@ -26,13 +28,32 @@ const AppContainer = styled.div`
   margin: 0 auto;
 `;
 
+const mockProject = {
+  name: 'Mock Project',
+  description: 'This is a mock project for testing.',
+  goal: 10000,
+  fundsRaised: 5000,
+};
+
+declare global {
+  interface Window {
+    Telegram: {
+      WebApp: any; // Replace 'any' with the actual type if known
+    };
+  }
+}
+
 function App() {
   const { network } = useTonConnect();
+  const webApp = window.Telegram.WebApp;
+  let tg = window.Telegram.WebApp;
+  tg.MainButton.hide();
 
   return (
     <StyledApp>
       <AppContainer>
         <FlexBoxCol>
+
           <FlexBoxRow>
             <TonConnectButton />
             <Button>
@@ -43,11 +64,12 @@ function App() {
                 : "N/A"}
             </Button>
           </FlexBoxRow>
-          <Counter />
-          <TransferTon />
-          <Jetton />
+
+          <FundProject {...mockProject} />
+
         </FlexBoxCol>
       </AppContainer>
+      <BottomNav />
     </StyledApp>
   );
 }
