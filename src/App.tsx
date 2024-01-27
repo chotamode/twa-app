@@ -35,19 +35,8 @@ const mockProject = {
   fundsRaised: 5000,
 };
 
-declare global {
-  interface Window {
-    Telegram: {
-      WebApp: any; // Replace 'any' with the actual type if known
-    };
-  }
-}
-
 function App() {
   const { network } = useTonConnect();
-  const webApp = window.Telegram.WebApp;
-  let tg = window.Telegram.WebApp;
-  tg.MainButton.hide();
 
   return (
     <StyledApp>
